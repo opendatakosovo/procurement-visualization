@@ -1,0 +1,386 @@
+{
+	"name": "Contract Procurement",
+	"overun_%": 0.05,
+	"children": [
+		{
+			"children":	[  
+				{  
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/02\/236",
+							"Description":"Sigurimi I automjeteve te Administr.,QKMF-se Sherb.Zjarrfikesve",
+							"Year":2010,
+							"Contract Awardee":"PROSING NSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"3-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"7564.31",
+							"Annex":"Not Provided",
+							"value":7564.31,
+							"overun_%":0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":0.7,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":0.1,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/05\/236",
+							"Description":"Mirembajtja dhe riparimi I Automjeteve",
+							"Year":2010,
+							"Contract Awardee":"MELSIA NTP",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"8-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":10000.0,
+							"overun_%":-0.1,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name":"Services",
+					"overun_%":0.1
+				},
+				{
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/03\/136",
+							"Description":"Furnizim me material stomatologjik dhe laboratorik per QKMF-ne-Kacanik",
+							"Year":2010,
+							"Contract Awardee":"BULI MEDICAL NTP",
+							"Awardee Headquarters":"Prishtine",
+							"Date Signed":"22-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":10000.0,
+							"overun_%":-0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/04\/136",
+							"Description":"Furnizim me perde per katin e trete ne objektin e Administrates Komunale",
+							"Year":2010,
+							"Contract Awardee":"JETA E RE NTSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"30-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"1736.29",
+							"Annex":"Not Provided",
+							"value":1736.29,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/07\/136",
+							"Description":"Furnizim me Inventar per Shkollat dhe Administraten Komunale",
+							"Year":2010,
+							"Contract Awardee":"METALI NTP",
+							"Awardee Headquarters":"Viti",
+							"Date Signed":"6-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"5235",
+							"Annex":"Not Provided",
+							"value":5235.0,
+							"overun_%":0.2,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name": "Supply",
+					"overun_%":-0.6
+				},
+				{
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/03\/136",
+							"Description":"Furnizim me material stomatologjik dhe laboratorik per QKMF-ne-Kacanik",
+							"Year":2010,
+							"Contract Awardee":"BULI MEDICAL NTP",
+							"Awardee Headquarters":"Prishtine",
+							"Date Signed":"22-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":1000.0,
+							"overun_%":-0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/04\/136",
+							"Description":"Furnizim me perde per katin e trete ne objektin e Administrates Komunale",
+							"Year":2010,
+							"Contract Awardee":"JETA E RE NTSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"30-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"1736.29",
+							"Annex":"Not Provided",
+							"value":1736.29,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/07\/136",
+							"Description":"Furnizim me Inventar per Shkollat dhe Administraten Komunale",
+							"Year":2010,
+							"Contract Awardee":"METALI NTP",
+							"Awardee Headquarters":"Viti",
+							"Date Signed":"6-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"5235",
+							"Annex":"Not Provided",
+							"value":3235.0,
+							"overun_%":0.2,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name": "Job",
+					"overun_%":0
+				}
+			],
+			"name": "KACANIK",
+			"overun_%":0.3
+		},
+		{
+			"children":	[  
+				{  
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/02\/236",
+							"Description":"Sigurimi I automjeteve te Administr.,QKMF-se Sherb.Zjarrfikesve",
+							"Year":2010,
+							"Contract Awardee":"PROSING NSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"3-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"7564.31",
+							"Annex":"Not Provided",
+							"value":7564.31,
+							"overun_%":0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":0.7,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":0.1,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/05\/236",
+							"Description":"Mirembajtja dhe riparimi I Automjeteve",
+							"Year":2010,
+							"Contract Awardee":"MELSIA NTP",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"8-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":10000.0,
+							"overun_%":-0.1,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"8493\/10\/06\/235",
+							"Description":"Eleminimi I qeneve Endacak",
+							"Year":2010,
+							"Contract Awardee":"SHOQATA E GJUETARèVE DRERI ",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"1-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"2685",
+							"Annex":"Not Provided",
+							"value":2685.0,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name":"Services",
+					"overun_%":0.1
+				},
+				{
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/03\/136",
+							"Description":"Furnizim me material stomatologjik dhe laboratorik per QKMF-ne-Kacanik",
+							"Year":2010,
+							"Contract Awardee":"BULI MEDICAL NTP",
+							"Awardee Headquarters":"Prishtine",
+							"Date Signed":"22-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":10000.0,
+							"overun_%":-0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/04\/136",
+							"Description":"Furnizim me perde per katin e trete ne objektin e Administrates Komunale",
+							"Year":2010,
+							"Contract Awardee":"JETA E RE NTSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"30-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"1736.29",
+							"Annex":"Not Provided",
+							"value":1736.29,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/07\/136",
+							"Description":"Furnizim me Inventar per Shkollat dhe Administraten Komunale",
+							"Year":2010,
+							"Contract Awardee":"METALI NTP",
+							"Awardee Headquarters":"Viti",
+							"Date Signed":"6-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"5235",
+							"Annex":"Not Provided",
+							"value":5235.0,
+							"overun_%":0.2,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name": "Supply",
+					"overun_%":-0.4
+				},
+				{
+					"children":	[
+						{
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/03\/136",
+							"Description":"Furnizim me material stomatologjik dhe laboratorik per QKMF-ne-Kacanik",
+							"Year":2010,
+							"Contract Awardee":"BULI MEDICAL NTP",
+							"Awardee Headquarters":"Prishtine",
+							"Date Signed":"22-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"10000",
+							"Annex":"Not Provided",
+							"value":1300.0,
+							"overun_%":-0.9,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/04\/136",
+							"Description":"Furnizim me perde per katin e trete ne objektin e Administrates Komunale",
+							"Year":2010,
+							"Contract Awardee":"JETA E RE NTSH",
+							"Awardee Headquarters":"Kacanik",
+							"Date Signed":"30-Mar-10",
+							"Estimated Value":"Not Provided",
+							"Price":"1736.29",
+							"Annex":"Not Provided",
+							"value":1736.29,
+							"overun_%":-0.3,
+							"clean_overun_%":"Not Applicable"
+						},
+						{  
+							"Fund Source":"Unknown",
+							"name":"KA652\/10\/07\/136",
+							"Description":"Furnizim me Inventar per Shkollat dhe Administraten Komunale",
+							"Year":2010,
+							"Contract Awardee":"METALI NTP",
+							"Awardee Headquarters":"Viti",
+							"Date Signed":"6-Apr-10",
+							"Estimated Value":"Not Provided",
+							"Price":"5235",
+							"Annex":"Not Provided",
+							"value":13235.0,
+							"overun_%":0.2,
+							"clean_overun_%":"Not Applicable"
+						}
+					],
+					"name": "Job",
+					"overun_%":0
+				}
+			],
+			"name": "FERIZAJ",
+			"overun_%":-0.5
+		}
+	]
+}
+
+						

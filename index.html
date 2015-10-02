@@ -131,6 +131,9 @@
 				<ul class="nav navbar-nav">
 					<li><a href="http://opendatakosovo.org/blog/raspberries-and-rawhide-a-story-of-agriculture-in-kosovo/">Back to Article</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="data/data.json" target="blank">Get Source Data</a></li>
+				</ul>
 			</div>
 		</div>
 	</nav>
@@ -169,7 +172,7 @@
 	var margin = {top: 20, right: 0, bottom: 0, left: 0};
 	var width = Math.max(document.documentElement.clientWidth*h_border, window.innerWidth*h_border || 0);
 	var height = Math.max(document.documentElement.clientHeight*v_border, window.innerHeight*v_border || 0);
-	var colorDomain = [-0.6, 0, 0.6];
+	var colorDomain = [-1, 0, 1];
     var colorRange = ["#FE2E2E", 'white', "#81F781"];
 	var colorCount = 10;
 	var legWidth = width/(colorCount+1);
@@ -239,14 +242,14 @@
 	legend.append("text")
 	.text(function(d){if (colorDomain.indexOf(colorIncrements(d)) >= 0) {return colorIncrements(d)};})
 	.attr('y', 20)
-	.attr('x', function(d){return d * legWidth + 0.5*legWidth});	
+	.attr('x', function(d){return d * legWidth + 0.5 * legWidth});	
 	
 	/*------------------------------------
 	Functions
 	------------------------------------*/
 	function start() {
 		$.ajax({
-			'url': "data/test.json",
+			'url': "data/data.json",
 			'dataType': 'json',
 			'responseJSON': 'data',
 			'success': function(data) {
@@ -255,11 +258,23 @@
 		});
 	};
 	
+	
 	function createMap(root) {
-		initialize(root);
-		accumulate(root);
-		layout(root);
-		display(root);
+		//var data = convert(root);
+		var data = root;
+		//console.log(data);
+		initialize(data);
+		accumulate(data);
+		layout(data);
+		display(data);
+	};
+	
+	function convert(root) {
+		var nested_data = d3.nest()
+		.key(function(d) { return d['Municipality']; })
+		.key(function(d) { return d['Contract Type']; })
+		.entries(root);
+		return nested_data;
 	};
 	
 	function initialize(root) {
@@ -314,7 +329,7 @@
 		grandparent
 		.datum(d.parent)
 		.select("rect")
-		.attr("fill", function(){return color(d.rate); });
+		.attr("fill", function(){return color(d["overun_%"]); });
 		
 		// color header based on grandparent's rate
 		var g1 = svg.insert("g", ".grandparent")
@@ -383,7 +398,7 @@
 		}
 
 		return g;
-	}
+	}	
 	
 	function removePopovers () {
 		$('.popover').each(function() {
@@ -399,8 +414,9 @@
 			html : true,
 			content: function() { 
 				return "<h4>" + d.name + "</h4><br>" + 
-				"<strong>Rate:</strong> " + d.rate.formatMoney(2) + "<br>" + 
-				"<strong>Value:</strong> " + d.value.formatMoney(0);
+				"<strong>Description:</strong> " + d.Description + "<br>" 
+				//"<strong>Actual Cost:</strong> " + d.value.formatMoney(2) + "<br>" + 
+				//"<strong>Estimated Cost:</strong> " + d["Estimated Value"].formatMoney(0);
 			}
 		});
 		$(this).popover('show')
@@ -409,7 +425,7 @@
 	function text(text) {
 		text.attr("x", function(d) { return x(d.x) + 6; })
 		.attr("y", function(d) { return y(d.y) + 6; })
-		.attr("fill", function (d) {return getContrast50(color(parseFloat(d.rate))); });
+		.attr("fill", function (d) {return getContrast50(color(parseFloat(d["overun_%"]))); });
 	}
 
 	function rect(rect) {
@@ -417,7 +433,7 @@
 		.attr("y", function(d) { return y(d.y); })
 		.attr("width", function(d) { return x(d.x + d.dx) - x(d.x); })
 		.attr("height", function(d) { return y(d.y + d.dy) - y(d.y); })
-		.attr("fill", function(d){return color(parseFloat(d.rate)); });
+		.attr("fill", function(d){return color(parseFloat(d["overun_%"])); });
 	}
 
 	function name(d) {
