@@ -170,57 +170,20 @@
 	var margin = {top: header, right: 0, bottom: 0, left: 0};
 	var width = Math.max(document.documentElement.clientWidth*h_border, window.innerWidth*h_border || 0);
 	var height = Math.max(document.documentElement.clientHeight*v_border, window.innerHeight*v_border|| 0);
+	
+	// Add Color Scale
 	var colorDomain = [-1, 0, 1];
     var colorRange = ["#81F781", 'white', "#FE2E2E"];
 	var colorCount = 10;
-	var legWidth = width/(colorCount+1);
-	
 	var colorSeries = [];
 	for (var i = 0; i <= colorCount; i++) {colorSeries.push(i);}
-	
-	var formatNumber = d3.format(",d"), transitioning;
-
-	var x = d3.scale.linear()
-	.domain([0, width])
-	.range([0, width]);
-
-	var y = d3.scale.linear()
-	.domain([0, height])
-	.range([0, height]);
-	
-	// adding a color scale
 	var color = d3.scale.linear()
     .domain(colorDomain)
     .range(colorRange);
-
-	var treemap = d3.layout.treemap()
-	.children(function(d, depth) { return depth ? null : d._children; })
-	.sort(function(a, b) { return a.value - b.value; })
-	.ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-	.round(false);
-
-	var svg = d3.select("#chart").append("svg")
-	.attr("width", width)
-	.attr("height", height + header)
-	.style("margin-left", -margin.left)
-	.style("margin.right", -margin.right)
-	.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-	.style("shape-rendering", "crispEdges");
-
-	var grandparent = svg.append("g")
-	.attr("class", "grandparent");
-
-	grandparent.append("rect")
-	.attr("y", -margin.top)
-	.attr("width", width)
-	.attr("height", margin.top);
-
-	grandparent.append("text")
-	.attr("x", 6)
-	.attr("y", 6 - margin.top)
-	.attr("dy", ".75em");
 	
+	// Add Legend
+	var legWidth = width/(colorCount+1);
+
 	var legend = d3.select("#legend").append("svg")
 	.attr("width", width)
 	.attr("height", 30)
@@ -229,18 +192,20 @@
 		.data(colorSeries)
 		.enter()
 		.append('g')
-	
+
 	legend.append("rect")
 	.attr("x", function(d){return d * legWidth})
 	.attr("y", 0)
 	.attr("fill", function(d) {return color(colorIncrements(d))})
 	.attr('width', legWidth + "px")
-	.attr('height', '40px')
+	.attr('height', '40px');
 
 	legend.append("text")
 	.text(function(d){if (colorDomain.indexOf(colorIncrements(d)) >= 0) {return colorIncrements(d)};})
 	.attr('y', 20)
 	.attr('x', function(d){return d * legWidth + 0.5 * legWidth});	
+
+	var formatNumber = d3.format(",d"), transitioning;
 	
 	/*------------------------------------
 	Functions
@@ -257,13 +222,54 @@
 	};
 	
 	function createMap(root) {
-		
+		$('#chart').empty();	
+		createVariables();
 		initialize(root);
 		accumulate(root);
 		layout(root);
 		display(root);
 	};
 	
+	// Create Global Variables
+	function createVariables() {
+		window.x = d3.scale.linear()
+		.domain([0, width])
+		.range([0, width]);
+	
+		window.y = d3.scale.linear()
+		.domain([0, height])
+		.range([0, height]);
+		
+		window.treemap = d3.layout.treemap()
+		.children(function(d, depth) { return depth ? null : d._children; })
+		.sort(function(a, b) { return a.value - b.value; })
+		.ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+		.round(false);
+	
+		window.svg = d3.select("#chart").append("svg")
+		.attr("width", width)
+		.attr("height", height + header)
+		.style("margin-left", -margin.left)
+		.style("margin.right", -margin.right)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+		.style("shape-rendering", "crispEdges");
+		
+		window.grandparent = svg.append("g")
+		.attr("class", "grandparent");
+
+		grandparent.append("rect")
+		.attr("y", -margin.top)
+		.attr("width", width)
+		.attr("height", margin.top);
+
+		grandparent.append("text")
+		.attr("x", 6)
+		.attr("y", 6 - margin.top)
+		.attr("dy", ".75em");
+	}
+	
+	// Initialize Tree
 	function initialize(root) {
 		root.x = root.y = 0;
 		root.dx = width;
@@ -385,7 +391,6 @@
 				transitioning = false;
 			});
 		}
-
 		return g;
 	}	
 	
