@@ -92,13 +92,12 @@
 		/*------------------------------------
 		Load Data and Initialize Treemap
 		------------------------------------*/
-		start();
-		
-		/*
+		start(2014);
+				
 		$('input[name=optradio]:radio').change(function() {
 			start(this.value);
 		});
-
+		/*
 		$('input[name=sizeradio]:radio').change(function() {
 			size = this.value;
 			def_size = size;
@@ -146,9 +145,7 @@
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2012">2012</label>
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2011">2011</label>
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2010">2010</label>
-				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2009">2009</label>
-				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2008">2008</label>
-				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="Total">All Years</label>
+				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="all">All Years</label>
 			</div>
 		</div>
 		<br>
@@ -168,12 +165,13 @@
 	<br>
 	<script>
 	var h_border = 0.75;
-	var v_border = 0.81;
-	var margin = {top: 20, right: 0, bottom: 0, left: 0};
+	var v_border = 0.78;
+	var header = 20
+	var margin = {top: header, right: 0, bottom: 0, left: 0};
 	var width = Math.max(document.documentElement.clientWidth*h_border, window.innerWidth*h_border || 0);
-	var height = Math.max(document.documentElement.clientHeight*v_border, window.innerHeight*v_border || 0);
+	var height = Math.max(document.documentElement.clientHeight*v_border, window.innerHeight*v_border|| 0);
 	var colorDomain = [-1, 0, 1];
-    var colorRange = ["#FE2E2E", 'white', "#81F781"];
+    var colorRange = ["#81F781", 'white', "#FE2E2E"];
 	var colorCount = 10;
 	var legWidth = width/(colorCount+1);
 	
@@ -203,9 +201,9 @@
 
 	var svg = d3.select("#chart").append("svg")
 	.attr("width", width)
-	.attr("height", height)
-	.style("margin-left", -margin.left + "px")
-	.style("margin.right", -margin.right + "px")
+	.attr("height", height + header)
+	.style("margin-left", -margin.left)
+	.style("margin.right", -margin.right)
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 	.style("shape-rendering", "crispEdges");
@@ -247,9 +245,9 @@
 	/*------------------------------------
 	Functions
 	------------------------------------*/
-	function start() {
+	function start(year) {
 		$.ajax({
-			'url': "data/data.json",
+			'url': "data/" + year + "_data.json",
 			'dataType': 'json',
 			'responseJSON': 'data',
 			'success': function(data) {
@@ -258,23 +256,12 @@
 		});
 	};
 	
-	
 	function createMap(root) {
-		//var data = convert(root);
-		var data = root;
-		//console.log(data);
-		initialize(data);
-		accumulate(data);
-		layout(data);
-		display(data);
-	};
-	
-	function convert(root) {
-		var nested_data = d3.nest()
-		.key(function(d) { return d['Municipality']; })
-		.key(function(d) { return d['Contract Type']; })
-		.entries(root);
-		return nested_data;
+		
+		initialize(root);
+		accumulate(root);
+		layout(root);
+		display(root);
 	};
 	
 	function initialize(root) {
@@ -360,7 +347,9 @@
 
 		g.append("text")
 		.attr("dy", ".75em")
-		.text(function(d) { return d.name; })
+		.text(function(d) { 
+			if(d["name"] !== undefined) {title = d["name"];} else {title = "#" + d["Serial Number"]};
+			return title; })
 		.call(text);
 
 		function transition(d) {
@@ -412,11 +401,22 @@
 			container: 'body',
 			trigger: 'manual',
 			html : true,
-			content: function() { 
-				return "<h4>" + d.name + "</h4><br>" + 
-				"<strong>Description:</strong> " + d.Description + "<br>" 
-				//"<strong>Actual Cost:</strong> " + d.value.formatMoney(2) + "<br>" + 
-				//"<strong>Estimated Cost:</strong> " + d["Estimated Value"].formatMoney(0);
+			content: function() {
+				if(d["name"] !== undefined) {title1 = "<h4>" + d["name"] + "</h4><br>";} else {title1 = ""};
+				if(d["Serial Number"] !== undefined) {title2 = "<h4> #" + d["Serial Number"] + "</h4><br>";} else {title2 = ""};
+				if(d["Description"] !== undefined) {desc = "<strong>Description:</strong> " + d["Description"] + "<br>";} else {desc = ""};
+				if(d["Estimated Cost"] !== undefined) {esco = "<strong>Estimated Cost:</strong> €" + d["Estimated Cost"] + "<br>";} else {esco = ""};
+				if(d["count"] > 1) {count = "<strong>Number of Contracts:</strong> " + d["count"] + "<br>";} else {count = "";}
+				if(d["value"] !== undefined) {acco = "<strong>Total Cost:</strong> €" + d["value"].formatMoney(0) + "<br>";} else {acco = ""};
+				if(d["Year"] !== undefined) {year = "<strong>Year:</strong> " + d["Year"] + "<br>";} else {year = ""};
+				if(d["Municipality"] !== undefined) {muni = "<strong>Municipality:</strong> " + d["Municipality"] + "<br>";} else {muni = ""};
+				if(d["Date Signed"] !== undefined) {date = "<strong>Date Signed:</strong> " + d["Date Signed"] + "<br>";} else {date = ""};
+				if(d["Fund Source"] !== undefined) {fund = "<strong>Fund Source:</strong> " + d["Fund Source"] + "<br>";} else {fund = ""};
+				if(d["Contract Awardee"] !== undefined) {awar = "<strong>Contract Awardee:</strong> " + d["Contract Awardee"] + "<br>";} else {awar = ""};
+				if(d["Awardee Headquarters"] !== undefined) {awhq = "<strong>Awardee HQ:</strong> " + d["Awardee Headquarters"] + "<br>";} else {awhq = ""};
+				
+				var text = title1 + title2 + year + muni + desc + esco + count + acco + date + fund + awar + awhq
+				return text;
 			}
 		});
 		$(this).popover('show')

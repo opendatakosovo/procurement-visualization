@@ -1,72 +1,51 @@
 #!/usr/local/bin/python3.1
 import pandas as pd
 import argparse
-import pprint
 import json
-import sys
-sys.setrecursionlimit(10000)
 
 # Example call: python csv_to_json.py --filepath "data/all_data.csv" --group-by 3
 
 #-------------------------------------------
-# Functions
+# Recursive Function
 #-------------------------------------------
-def diff(a, b):
-    return [aa for aa in a if aa not in set(b)]
-    
-def inner_loop(data, array, current_level, total_levels):
+def inner_loop(data, array, current_level, total_levels, name = "name", children="children", sum_value = None, avg_value = None, count_field = True):
     
     #generate column name and levels
     colname = list(data.columns.values)[(current_level - 1)]
     levels = data[colname].drop_duplicates().values.tolist()
-    original_data = data
     i = 0
-    mapping = [0, 0, 0, 0]
     
     #Loop through levels
     for level in levels:
-        mapping[current_level - 1] = i
         
-        # Nesting string
-        nesting = "array"
-        j = 1
+        # Create empty children subarray
+        array[children].insert(i, {})
+        array[children][i][children] = {}
         
-        while j <= current_level:
-            if j <= current_level:
-                nesting = nesting + "[\"children\"]" + "[" + str(mapping[j-1]) + "]"
-            #elif j == current_level:
-            #    nesting = nesting + "[\"children\"]"
-            j = j + 1
-        
-        query = nesting + "[\"name\"] = \"" + level + "\""
-        print(query)
-        exec query
-       
-        query = nesting + "[\"value\"] = data[\"Total\"].sum()"
-        exec query
-        
-        query = nesting + "[\"overun_%\"] = data[\"overun_%\"].mean()"
-        exec query
-        
-        query = nesting + "[\"children\"] = []"
-        exec query
-
         # If further nesting required
         if current_level < total_levels:
             new_level = current_level + 1
-            data = data.loc[data.loc[ : , colname] == level, : ]
-            subarray = inner_loop(data, array, new_level, total_levels)
-            query = nesting + "[\"children\"] = subarray"
-            exec query
+            subdata = data.loc[data.loc[ : , colname] == level, : ]
+            new_array = {children : []}
+            subarray = inner_loop(subdata, new_array, new_level, total_levels, name, children, sum_value, avg_value, count_field)
+            array[children][i] = subarray
             
         # Else if all nesting completed
         elif current_level == total_levels:
-            query = nesting + "[\"children\"] = {\"Item 1\":\"A\", \"Item 2\":\"B\",\"Item 3\":\"C\"}"
-            exec query
-            
-        data = original_data
+            other_values = data.loc[data.loc[ : , colname] == level, : ].to_dict(orient = "records")
+            array[children][i][children] = other_values
+        
+        # Add Meta Values for current Level
+        array[children][i][name] = level
+        if sum_value != None:
+            array[children][i][sum_value] = data.loc[data.loc[ : , colname] == level, sum_value].sum()
+        if avg_value != None:
+            array[children][i][avg_value] = data.loc[data.loc[ : , colname] == level, avg_value].mean()
+        if count_field:
+            array[children][i]["count"] = len(data.loc[data.loc[ : , colname] == level, ].index)
+        
         i += 1
-       
+    
     return array
 
 #-------------------------------------------
@@ -79,16 +58,24 @@ parser.add_argument('--filepath', type=str)
 parser.add_argument('--group-by', type=int, default=0)
 args = parser.parse_args()
 
+name_field = "name"
+child_field = "children"
+sum_field = "value"
+avg_field = "overun_%"
+root_node = "Procurement Data"
+
 # Load in Dataset
 data = pd.read_csv(args.filepath, header=0, delimiter=",", quoting=1, index_col=0 )
-data = data[1000:1100]
+#data = data[1000:1050]
+
+root_avg = data.loc[ : , avg_field].mean()
 
 # Initialize Recursion
-array = {"name": "Procurement Data"
-        , "overun_%" : 0.5
-        , "value": 1000
-        , "children": [{}]
+array = {name_field: root_node
+        , avg_field : root_avg
+        , child_field : []
     }
+
 total_levels = args.group_by
 current_level = 1
 
@@ -96,13 +83,12 @@ array = inner_loop(data = data
     , array = array
     , current_level = current_level
     , total_levels  = total_levels
+    , name = name_field
+    , children = child_field
+    , sum_value = sum_field
+    , avg_value = avg_field
     )
 
-pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(array)
-#with open("my.json","w") as f:
-#    json.dump(array,f, check_circular = False)
-
-
-
+json_array = json.dumps(array, indent = 4, ensure_ascii = False)
+print(json_array)
 
