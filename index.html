@@ -116,7 +116,7 @@
 					<li><a href="http://opendatakosovo.org/blog/">Back to Article</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="data/data.json" target="blank">Get Source Data</a></li>
+					<li><a href="http://opendatakosovo.org/app/csv-server/output?file_name=procurement_data&root_node=Procurement%20Data" target="blank">Get Source Data</a></li>
 				</ul>
 			</div>
 		</div>
@@ -217,10 +217,10 @@
 	.attr('height', '40px');
 
 	legend.append("text")
-	.text(function(d){if (colorDomain.indexOf(colorIncrements(d)) >= 0) {return colorIncrements(d)};})
+	.text(function(d){if (colorDomain.indexOf(colorIncrements(d)) >= 0) {return legendText(d)};})
 	.attr('y', 20)
 	.attr('x', function(d){return d * legWidth + 0.5 * legWidth});	
-
+	
 	var formatNumber = d3.format(",d"), transitioning;
 	
 	/*------------------------------------
@@ -489,6 +489,15 @@
 	// Determines colors 
 	function colorIncrements(d){
 		return (colorDomain[colorDomain.length - 1] - colorDomain[0])/colorCount*d + colorDomain[0];
+	}
+	
+	//Text for Legend
+	function legendText(d){
+		if (d == 0) {var text = "Under Budget"}
+		else if (d == 5) {var text = "On Budget"}
+		else if (d == 10) {var text = "Over Budget"}
+		else {var text = ""};
+		return (text)
 	}
 	
 	// Determines if white or black will be better contrasting color
