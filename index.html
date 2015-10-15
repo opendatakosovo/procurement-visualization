@@ -4,57 +4,57 @@
 	<meta charset="utf-8">
 	<style type="text/css">	
 	text {
-	  pointer-events: none;
+		pointer-events: none;
 	}
 	.grandparent text {
-	  font-weight: bold;
+		font-weight: bold;
 	}
 	rect {
-	  stroke: #fff;
-	  stroke-width: 1px;
+		stroke: #fff;
+		stroke-width: 1px;
 	}
 	rect.parent {
 		opacity: 1;
 		stroke-width: 2px;
-	  	stroke: black;
+		stroke: black;
 	}
 	.grandparent rect {
 		opacity: 1;
 		stroke-width: 2px;
-	  	stroke: black;
+		stroke: black;
 	}
 	.grandparent:hover rect {
 		opacity: 0.4;
 	}
 	.children rect.parent,
 	.grandparent rect {
-	  	cursor: pointer;
+		cursor: pointer;
 	}
 	.children rect.child {
-	  opacity: 1;
+		opacity: 1;
 	}
 	.children rect.parent {
 	}
 	.children:hover rect.child {
-	  	opacity: 1;
+		opacity: 1;
 		stroke-width: 2px;
-  		stroke: black;
+		stroke: black;
 	}
 	.children:hover rect.parent {
-	  opacity: 0;
+		opacity: 0;
 	}
 	.legend rect {
-	  stroke-width: 0px;
+		stroke-width: 0px;
 	}
 	.legend text {
-	  text-anchor: middle;
-	  pointer-events: auto;
-	  font-size: 14px;
-	  font-family: eurostile, tahoma, sans-serif;
-	  fill: black;
+		text-anchor: middle;
+		pointer-events: auto;
+		font-size: 14px;
+		font-family: eurostile, tahoma, sans-serif;
+		fill: black;
 	}
 	.row {
-		width: 7%;
+		width: 12%;
 		border: 1px solid black;
 		float: left;
 		margin-left: 2%;
@@ -70,51 +70,36 @@
 		width: 75%;
 		float: left;
 		margin-left: 3%;
-		margin-right: 5%;
+		margin-right: 2%;
 	}
 	#legend {
 		width: 75%;
 		float: left;
 		margin-top: 1%;
-		margin-left: 13%;
-		margin-right: 5%;
+		margin-left: 18%;
+		margin-right: 2%;
 	}
 	</style>
 	
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="waitMe/waitMe.min.css" />
 	
 	<script src="js/d3.v3.min.js"></script>
 	<script src="js/jquery-2.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="waitMe/waitMe.min.js"></script>
 	<script>
 	$( document ).ready(function() {
 		
 		/*------------------------------------
 		Load Data and Initialize Treemap
 		------------------------------------*/
-		start(2014);
+		start(year, groups);
 				
 		$('input[name=optradio]:radio').change(function() {
-			start(this.value);
-		});
-		/*
-		$('input[name=sizeradio]:radio').change(function() {
-			size = this.value;
-			def_size = size;
-			create(undefined, size, undefined);
+			start(this.value, groups);
 		});
 		
-		$('input[name=colorradio]:radio').change(function() {
-			color = this.value;
-			def_color = color;
-			allocateColor(this.value);
-		});
-		
-		$('input[name=groupradio]:radio').change(function() {
-			group = this.value;
-			def_group = group;
-			create(undefined, undefined, group);
-		});*/
 	});
 	
 	</script>
@@ -128,7 +113,7 @@
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
-					<li><a href="http://opendatakosovo.org/blog/raspberries-and-rawhide-a-story-of-agriculture-in-kosovo/">Back to Article</a></li>
+					<li><a href="http://opendatakosovo.org/blog/">Back to Article</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="data/data.json" target="blank">Get Source Data</a></li>
@@ -140,7 +125,7 @@
 		<h5>Year:</h5>
 		<div class="form">
 			<div class="btn-group-vertical btn-group-sm" data-toggle="buttons">
-				<label class="btn btn-default btn-block active"><input type="radio" name="optradio" value="2014" >2014</label>
+				<label class="btn btn-default btn-block active"><input type="radio" name="optradio" value="2014" checked>2014</label>
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2013">2013</label>
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2012">2012</label>
 				<label class="btn btn-default btn-block"><input type="radio" name="optradio" value="2011">2011</label>
@@ -149,13 +134,38 @@
 			</div>
 		</div>
 		<br>
-		<h5>Size By:</h5>
-		<div class="form">
-			<div class="btn-group-vertical btn-group-sm" data-toggle="buttons">
-				<label class="btn btn-default btn-block active"><input type="radio" name="sizeradio" value="log_val" checked>Value</label>
-				<label class="btn btn-default btn-block"><input type="radio" name="sizeradio" value="log_quant">Quantity</label>
-			</div>
+		<h5>Group By:</h5>
+		<div class="input-group">
+			<h6>Level 1</h6>
+			<select class="form-control" id="level1">
+				<option value="Municipality">Municipality</option>
+				<option value="Fund%20Source">Funding Source</option>
+				<option value="Contract%20Type">Contract Type</option>
+				<option value="">None</option>
+			</select>
 		</div>
+		<br>
+		<div class="input-group">
+			<h6>Level 2</h6>
+			<select class="form-control" id="level2">
+				<option value="Contract%20Type">Contract Type</option>
+				<option value="Municipality">Municipality</option>
+				<option value="Fund%20Source">Funding Source</option>
+				<option value="">None</option>
+			</select>
+		</div>
+		<br>
+		<div class="input-group">
+			<h6>Level 3</h6>
+			<select class="form-control" id="level3">
+				<option value="">None</option>
+				<option value="Municipality">Municipality</option>
+				<option value="Fund%20Source">Funding Source</option>
+				<option value="Contract%20Type">Contract Type</option>
+			</select>
+		</div>
+		<br>
+		<button class="btn btn-default" onclick="relevel()">Regroup</button>
 	</div>
 	
 	<div id="chart"></div>
@@ -165,21 +175,27 @@
 	<br>
 	<script>
 	var h_border = 0.75;
-	var v_border = 0.78;
-	var header = 20
+	var v_border = 0.72;
+	var header = 20;
 	var margin = {top: header, right: 0, bottom: 0, left: 0};
 	var width = Math.max(document.documentElement.clientWidth*h_border, window.innerWidth*h_border || 0);
 	var height = Math.max(document.documentElement.clientHeight*v_border, window.innerHeight*v_border|| 0);
 	
+	// Set default values
+	var year = $('input[name=optradio]:checked').val();
+	if (groups === undefined) {
+		var groups = "Municipality,Contract%20Type"
+	};
+	
 	// Add Color Scale
 	var colorDomain = [-1, 0, 1];
-    var colorRange = ["#81F781", 'white', "#FE2E2E"];
+	var colorRange = ["#81F781", 'white', "#FE2E2E"];
 	var colorCount = 10;
 	var colorSeries = [];
 	for (var i = 0; i <= colorCount; i++) {colorSeries.push(i);}
 	var color = d3.scale.linear()
-    .domain(colorDomain)
-    .range(colorRange);
+	.domain(colorDomain)
+	.range(colorRange);
 	
 	// Add Legend
 	var legWidth = width/(colorCount+1);
@@ -189,9 +205,9 @@
 	.attr("height", 30)
 	.attr('class', 'legend')
 	.selectAll("g")
-		.data(colorSeries)
-		.enter()
-		.append('g')
+	.data(colorSeries)
+	.enter()
+	.append('g')
 
 	legend.append("rect")
 	.attr("x", function(d){return d * legWidth})
@@ -210,15 +226,35 @@
 	/*------------------------------------
 	Functions
 	------------------------------------*/
-	function start(year) {
+	function start(year, groups) {
+		toggleSpinner(true);
+		var url = "http://opendatakosovo.org/app/csv-server/output?file_name=procurement_data&colnames=";
+		url = url + groups;
+		url = url + "&sum_field=value";
+		url = url + "&avg_field=overun_%";
+		url = url + "&root_node=Procurement%20Data";
+		if (year != "all") {url = url + "&filter_col=Year&filter_val=" + year};
+		//url = url + "&limit=100";
+		console.log(url)
 		$.ajax({
-			'url': "data/" + year + "_data.json",
-			'dataType': 'json',
-			'responseJSON': 'data',
+			'url': url,
+			'dataType': "json",
 			'success': function(data) {
 				createMap(data);
 			}
 		});
+	};
+	
+	function relevel() {
+		var level1 = document.getElementById("level1").value;
+		var level2 = document.getElementById("level2").value;
+		var level3 = document.getElementById("level3").value;
+		if (level1 == level2) {level2 = ""};
+		if (level1 == level3) {level3 = ""};
+		if (level2 == level3) {level3 = ""};
+		window.groups = $.grep([level1, level2, level3], Boolean).join(",");
+		var year = $('input[name=optradio]:checked').val();
+		start(year, groups);
 	};
 	
 	function createMap(root) {
@@ -228,6 +264,7 @@
 		accumulate(root);
 		layout(root);
 		display(root);
+		toggleSpinner(false);
 	};
 	
 	// Create Global Variables
@@ -319,12 +356,13 @@
 		.select("text")
 		.text(name(d))
 		
+		// color header based on grandparent's rate (white if no value provided)
 		grandparent
 		.datum(d.parent)
 		.select("rect")
-		.attr("fill", function(){return color(d["overun_%"]); });
+		.attr("fill", function(){return (d["overun_%"] === undefined) ? color(0) : color(d["overun_%"]); });
 		
-		// color header based on grandparent's rate
+
 		var g1 = svg.insert("g", ".grandparent")
 		.datum(d)
 		.attr("class", "depth")
@@ -355,7 +393,8 @@
 		.attr("dy", ".75em")
 		.text(function(d) { 
 			if(d["name"] !== undefined) {title = d["name"];} else {title = "#" + d["Serial Number"]};
-			return title; })
+			return title; 
+		})
 		.call(text);
 
 		function transition(d) {
@@ -467,6 +506,26 @@
 		j = (j = i.length) > 3 ? j % 3 : 0;
 		return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 	};
+	
+	function toggleSpinner(display){
+	    if(display == true){
+	      $('body').waitMe({
+	        //none, rotateplane, stretch, orbit, roundBounce, win8, 
+	        //win8_linear, ios, facebook, rotation, timer, pulse, 
+	        //progressBar, bouncePulse or img
+	        effect: 'stretch',
+	        text: '', //place text under the effect (string).
+	        bg: 'rgba(255,255,255,0.7)', //background for container (string).
+	        color: '#000', //color for background animation and text (string).
+	        sizeW: '', //change width for elem animation (string).
+	        sizeH: '', //change height for elem animation (string).
+	        // url to image
+	        source: 'http://4206e9.medialib.glogster.com/media/0de16589e28c077f3ed220e39400774bac8f7465c318d7fe4cc8e9ce8756e1af/animated-gifs-eagles-6.gif'
+	      });
+	    }else{
+	      $('body').waitMe('hide');
+	    }
+	  } 
 
 	</script>
 </body>
