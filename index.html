@@ -234,8 +234,6 @@
 		url = url + "&avg_field=overun_%";
 		url = url + "&root_node=Procurement%20Data";
 		if (year != "all") {url = url + "&filter_col=Year&filter_val=" + year};
-		//url = url + "&limit=100";
-		console.log(url)
 		$.ajax({
 			'url': url,
 			'dataType': "json",
